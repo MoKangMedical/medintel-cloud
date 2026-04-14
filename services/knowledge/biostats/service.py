@@ -1,14 +1,13 @@
 """
-📊 生物统计 — 服务入口
+源自 Biostats 项目
 """
 
-import uvicorn
-from .api import router
 from fastapi import FastAPI
+from .api import router
 
 app = FastAPI(title="Biostats", version="1.0.0")
-app.include_router(router, prefix="/biostats")
-
+app.include_router(router)
 
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
