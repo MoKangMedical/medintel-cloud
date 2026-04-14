@@ -1,14 +1,13 @@
 """
-🏥 罕见病AI诊疗 — 服务入口
+源自 medichat-rd 项目，适配 MedIntel Cloud monorepo
 """
 
-import uvicorn
-from .api import router
 from fastapi import FastAPI
+from .api import router
 
-app = FastAPI(title="MediChat-RD", version="1.0.0")
-app.include_router(router, prefix="/chat")
-
+app = FastAPI(title="Medi Chat Rd", version="2.0.0")
+app.include_router(router)
 
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

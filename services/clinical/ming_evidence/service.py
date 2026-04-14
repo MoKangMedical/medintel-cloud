@@ -1,14 +1,13 @@
 """
-📚 临床证据平台 — 服务入口
+源自 mingevidence 项目，适配 MedIntel Cloud monorepo
 """
 
-import uvicorn
-from .api import router
 from fastapi import FastAPI
+from .api import router
 
-app = FastAPI(title="MingEvidence", version="1.0.0")
-app.include_router(router, prefix="/evidence")
-
+app = FastAPI(title="Ming Evidence", version="2.0.0")
+app.include_router(router)
 
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

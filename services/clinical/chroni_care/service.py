@@ -1,14 +1,13 @@
 """
-💊 慢病管理 — 服务入口
+源自 chronicdiseasemanagement 项目，适配 MedIntel Cloud monorepo
 """
 
-import uvicorn
-from .api import router
 from fastapi import FastAPI
+from .api import router
 
-app = FastAPI(title="ChroniCare", version="1.0.0")
-app.include_router(router, prefix="/chronic")
-
+app = FastAPI(title="Chroni Care", version="2.0.0")
+app.include_router(router)
 
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
