@@ -1,88 +1,277 @@
-# 🏥 MedIntel Cloud — 全栈医疗AI统一平台
+# medintel-cloud
 
-> Harness（环境设计）比模型本身更重要。
-> 模型可以替换，流程编排才是护城河。
+🏥 MedIntel Cloud — 全栈医疗AI统一平台
 
-## 架构概览
+## 项目简介
 
-```
-medintel-cloud/
-├── core/                    # 🔧 共享核心层
-│   ├── models/              #   统一数据模型 (FHIR/RWD/EHR)
-│   ├── auth/                #   统一认证 & 权限
-│   ├── gateway/             #   API Gateway (FastAPI)
-│   └── utils/               #   通用工具
-│
-├── services/                # 🧩 业务服务模块
-│   ├── drug_discovery/      #   🔬 药物发现引擎
-│   │   ├── medi_pharma/     #     AI药物发现 (靶点→筛选→分子→ADMET)
-│   │   ├── drugmind/        #     数字分身协作 (7×24 AI协作)
-│   │   ├── virtual_cell/    #     虚拟细胞验证 (Benchmark)
-│   │   └── pharma_sim/      #     上市预测仿真 (1801 Agent)
-│   │
-│   ├── clinical/            #   🏥 临床决策引擎
-│   │   ├── medi_chat_rd/    #     罕见病AI诊疗 (4C体系)
-│   │   ├── med_roundtable/  #     科研圆桌 (A2A架构)
-│   │   ├── ming_evidence/   #     临床证据 (中国版OpenEvidence)
-│   │   └── chroni_care/     #     慢病管理 (风险分层+MDT)
-│   │
-│   ├── cognitive_commerce/  #   💊 认知商业引擎
-│   │   ├── medi_slim/       #     消费医疗 (AI体质+营销)
-│   │   ├── cloud_memorial/  #     AI数字纪念 (语音克隆+人格)
-│   │   ├── tianyan/         #     商业预测 (多Agent人群模拟)
-│   │   └── minder/          #     智能语音提醒
-│   │
-│   ├── knowledge/           #   🧠 知识研究引擎
-│   │   ├── digital_sage/    #     100大脑对话
-│   │   ├── ponder/          #     知识工作流
-│   │   ├── heor_modeling/   #     HEOR/HTA建模
-│   │   └── biostats/        #     生物统计
-│   │
-│   └── infrastructure/      #   🏗️ 基础设施
-│       └── openclaw_harness/#     统一编排框架
-│
-├── deploy/                  # 🚀 部署配置
-│   ├── docker/
-│   ├── k8s/
-│   └── nginx/
-│
-├── docs/                    # 📖 文档
-└── tests/                   # 🧪 测试
-```
+这是一个医疗AI项目，致力于通过人工智能技术解决医疗健康领域的挑战。
 
-## 引擎说明
+## 功能特性
 
-| 引擎 | 核心价值 | 目标客户 |
-|------|---------|---------|
-| 🔬 药物发现 | 靶点→候选化合物全流程 | 药企、Biotech |
-| 🏥 临床决策 | 诊疗+科研+证据+管理 | 医院、科研机构 |
-| 💊 认知商业 | C端消费+商业预测 | 消费医疗、品牌方 |
-| 🧠 知识研究 | 知识管理+统计+建模 | 学术、咨询 |
+### 核心功能
+- 🏥 医疗AI核心功能
+- 🔬 智能诊断与分析
+- 📊 数据可视化与报告
+- 🤖 多模态交互支持
+- 🔒 数据安全与隐私保护
 
-## 快速启动
-
-```bash
-# 开发环境
-docker-compose up -d
-
-# API Gateway
-cd core/gateway && uvicorn main:app --reload
-
-# 单独服务
-cd services/drug_discovery/medi_pharma && python main.py
-```
+### 技术特性
+- 🚀 高性能计算
+- 📈 可扩展架构
+- 🔄 实时数据处理
+- 🌐 分布式部署
+- 📱 多平台支持
 
 ## 技术栈
 
-- **编排层:** OpenClaw-Medical-Harness (Python)
-- **API:** FastAPI + OpenAPI
-- **数据:** PostgreSQL + Redis + Vector DB
-- **模型:** MIMO API (mimo-v2-pro/omni/flash)
-- **部署:** Docker Compose → K8s
+### 后端技术
+- **框架**: Python FastAPI, Django, Flask
+- **AI框架**: TensorFlow, PyTorch, Scikit-learn
+- **数据库**: PostgreSQL, MongoDB, Redis
+- **消息队列**: RabbitMQ, Kafka
+- **容器化**: Docker, Kubernetes
 
-## 商业模式
+### 前端技术
+- **框架**: React, Vue.js, Angular
+- **UI库**: Ant Design, Material-UI, Element UI
+- **可视化**: D3.js, ECharts, Plotly
+- **移动端**: React Native, Flutter
 
-- **SaaS订阅:** 按引擎模块订阅
-- **用量计费:** API调用按量
-- **私有化:** License费 + 部署服务
-- **项目制:** 药企CRO-like合作
+### 数据处理
+- **分析**: Pandas, NumPy, SciPy
+- **可视化**: Matplotlib, Seaborn, Plotly
+- **大数据**: Spark, Hadoop
+- **流处理**: Flink, Storm
+
+## 快速开始
+
+### 环境要求
+
+- Python 3.9+
+- Node.js 16+
+- Docker 20+
+- Git 2.30+
+
+### 安装步骤
+
+1. **克隆仓库**
+```bash
+git clone https://github.com/MoKangMedical/medintel-cloud.git
+cd medintel-cloud
+```
+
+2. **后端设置**
+```bash
+# 创建虚拟环境
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate  # Windows
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 配置环境变量
+cp .env.example .env
+# 编辑.env文件，配置数据库连接等
+```
+
+3. **前端设置**
+```bash
+cd frontend
+npm install
+npm run build
+```
+
+4. **数据库设置**
+```bash
+# 初始化数据库
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+5. **启动服务**
+```bash
+# 使用Docker Compose（推荐）
+docker-compose up -d
+
+# 或手动启动
+python manage.py runserver
+```
+
+## 项目结构
+
+```
+medintel-cloud/
+├── backend/                 # 后端代码
+│   ├── api/                # API接口
+│   ├── models/             # 数据模型
+│   ├── services/           # 业务逻辑
+│   ├── utils/              # 工具函数
+│   └── tests/              # 测试用例
+├── frontend/               # 前端代码
+│   ├── src/               # 源代码
+│   ├── public/            # 静态资源
+│   └── package.json       # 依赖配置
+├── ai-engine/             # AI引擎
+│   ├── models/           # AI模型
+│   ├── training/         # 训练脚本
+│   └── inference/        # 推理服务
+├── data/                  # 数据存储
+│   ├── raw/              # 原始数据
+│   ├── processed/        # 处理后的数据
+│   └── models/           # 训练好的模型
+├── docs/                  # 项目文档
+│   ├── api/              # API文档
+│   ├── user/             # 用户手册
+│   └── dev/              # 开发文档
+├── scripts/               # 脚本工具
+│   ├── deploy/           # 部署脚本
+│   ├── data/             # 数据处理脚本
+│   └── utils/            # 工具脚本
+├── tests/                 # 测试代码
+├── docker-compose.yml     # Docker编排
+├── Dockerfile            # Docker配置
+├── requirements.txt      # Python依赖
+├── .env.example          # 环境变量示例
+├── .gitignore           # Git忽略文件
+└── README.md            # 项目说明
+```
+
+## API文档
+
+### 主要接口
+
+#### 基础接口
+- `GET /` - 首页
+- `GET /health` - 健康检查
+- `GET /api/v1/status` - 系统状态
+
+#### 数据接口
+- `GET /api/v1/data` - 获取数据列表
+- `POST /api/v1/data` - 上传数据
+- `GET /api/v1/data/<built-in function id>` - 获取特定数据
+
+#### 分析接口
+- `POST /api/v1/analyze` - 数据分析
+- `GET /api/v1/analyze/<built-in function id>` - 获取分析结果
+- `GET /api/v1/reports` - 获取报告列表
+
+#### 用户接口
+- `POST /api/v1/auth/login` - 用户登录
+- `POST /api/v1/auth/register` - 用户注册
+- `GET /api/v1/users/me` - 获取当前用户信息
+
+### 详细文档
+
+启动服务后，访问以下地址查看完整API文档：
+
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+- **OpenAPI JSON**: http://localhost:8000/openapi.json
+
+## 配置说明
+
+### 环境变量
+
+创建 `.env` 文件并配置以下变量：
+
+```bash
+# 基础配置
+DEBUG=True
+SECRET_KEY=your-secret-key
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# 数据库配置
+DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+REDIS_URL=redis://localhost:6379/0
+
+# AI服务配置
+OPENAI_API_KEY=your-openai-key
+HUGGINGFACE_TOKEN=your-hf-token
+
+# 文件存储配置
+AWS_ACCESS_KEY_ID=your-aws-key
+AWS_SECRET_ACCESS_KEY=your-aws-secret
+AWS_STORAGE_BUCKET_NAME=your-bucket-name
+
+# 邮件配置
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_HOST_USER=your-email@gmail.com
+EMAIL_HOST_PASSWORD=your-email-password
+```
+
+## 部署指南
+
+### Docker部署（推荐）
+
+1. **构建镜像**
+```bash
+docker build -t medintel-cloud .
+```
+
+2. **运行容器**
+```bash
+docker run -d -p 8000:8000 --name medintel-cloud medintel-cloud
+```
+
+3. **使用Docker Compose**
+```bash
+docker-compose up -d
+```
+
+## 测试
+
+### 运行测试
+
+```bash
+# 运行所有测试
+python -m pytest tests/
+
+# 运行特定测试
+python -m pytest tests/test_api.py
+
+# 生成测试覆盖率报告
+python -m pytest --cov=app tests/
+```
+
+## 贡献指南
+
+我们欢迎任何形式的贡献！请遵循以下步骤：
+
+1. **Fork本仓库**
+2. **创建特性分支**
+```bash
+git checkout -b feature/AmazingFeature
+```
+
+3. **提交更改**
+```bash
+git commit -m 'Add some AmazingFeature'
+```
+
+4. **推送到分支**
+```bash
+git push origin feature/AmazingFeature
+```
+
+5. **创建Pull Request**
+
+## 许可证
+
+本项目采用 [MIT License](LICENSE) 许可证。
+
+## 联系方式
+
+- **项目维护者**: MoKangMedical
+- **邮箱**: contact@mokangmedical.com
+- **项目主页**: https://github.com/MoKangMedical/medintel-cloud
+- **问题反馈**: https://github.com/MoKangMedical/medintel-cloud/issues
+
+## 致谢
+
+感谢所有为这个项目做出贡献的开发者和医疗领域专家！
+
+---
+
+**注意**: 这是一个活跃开发中的项目，API和功能可能会发生变化。请定期查看更新日志获取最新信息。
