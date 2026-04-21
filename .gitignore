@@ -9,3 +9,9 @@ build/
 .mypy_cache/
 node_modules/
 *.log
+.env.local
+.env.*.local
+*.key
+*.pem
+*_secret*
+credentials.json
