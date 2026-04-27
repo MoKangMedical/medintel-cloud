@@ -12,12 +12,12 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Global instances (in production use dependency injection)
-from ..digital_twin.engine import DigitalTwinEngine
-from ..digital_twin.roles import list_roles
-from ..collaboration.decision_log import DecisionLogger
-from ..collaboration.consensus import ConsensusEngine
-from ..collaboration.discussion import DiscussionEngine
-from ..second_me.integration import SecondMeIntegration
+from .digital_twin.engine import DigitalTwinEngine
+from .digital_twin.roles import list_roles
+from .collaboration.decision_log import DecisionLogger
+from .collaboration.consensus import ConsensusEngine
+from .collaboration.discussion import DiscussionEngine
+from .second_me.integration import SecondMeIntegration
 
 twin_engine = DigitalTwinEngine()
 decision_logger = DecisionLogger()

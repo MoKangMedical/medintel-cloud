@@ -4,7 +4,7 @@ HEOR/HTA 建模平台 — 整合版
 核心能力：Markov模型、PSA分析、成本效果分析、对标TreeAge
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import Depends, APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
 from enum import Enum
