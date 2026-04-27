@@ -106,13 +106,13 @@ BUILTIN_MODELS = [
 ]
 
 BUILTIN_DATASETS = [
-    Dataset(id="adamson", name="Adamson et al. 2016", organism="Homo sapiens",
+    BenchmarkDataset(id="adamson", name="Adamson et al. 2016", organism="Homo sapiens",
             tissue="K562 cells", n_cells=5000, n_genes=8000,
             task_type="perturbation", description="CRISPR perturbation dataset"),
-    Dataset(id="norman", name="Norman et al. 2019", organism="Homo sapiens",
+    BenchmarkDataset(id="norman", name="Norman et al. 2019", organism="Homo sapiens",
             tissue="K562 cells", n_cells=15000, n_genes=5000,
             task_type="perturbation", description="Combinatorial perturbation"),
-    Dataset(id="replogle", name="Replogle et al. 2022", organism="Homo sapiens",
+    BenchmarkDataset(id="replogle", name="Replogle et al. 2022", organism="Homo sapiens",
             tissue="K562/RPE1", n_cells=200000, n_genes=10000,
             task_type="perturbation", description="Perturb-seq"),
 ]

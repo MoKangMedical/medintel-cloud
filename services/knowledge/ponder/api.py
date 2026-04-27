@@ -4,7 +4,7 @@ Ponder 知识工作流 — 整合版
 核心能力：资料导入→引用→洞察→报告
 """
 
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import Depends, APIRouter, HTTPException, UploadFile, File
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
 from enum import Enum

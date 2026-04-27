@@ -4,7 +4,7 @@ MedRoundTable 临床科研圆桌 — 整合版
 核心能力：14个Agent协作、A2A架构、科研全流程
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import Depends, APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from enum import Enum

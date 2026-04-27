@@ -4,7 +4,7 @@ DigitalSage 100大脑对话 — 整合版
 核心能力：100个名人方法论、AI对话引擎、思想画像
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import Depends, APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
 from enum import Enum

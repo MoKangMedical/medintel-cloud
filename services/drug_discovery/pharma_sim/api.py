@@ -4,7 +4,7 @@ PharmaSim 药品上市预测仿真 — 整合版
 核心能力：1801个Agent社交网络模拟、上市表现预测、竞争分析
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import Depends, APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
 from enum import Enum

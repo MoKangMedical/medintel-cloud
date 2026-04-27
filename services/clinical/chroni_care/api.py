@@ -4,7 +4,7 @@ ChroniCare 慢病管理 — 整合版
 核心能力：风险分层、干预推荐、MDT多学科协作
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import Depends, APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
 from enum import Enum

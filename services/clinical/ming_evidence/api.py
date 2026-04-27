@@ -4,7 +4,7 @@ MingEvidence 临床证据平台 — 整合版
 核心能力：临床证据搜索、分级评价、实时数据源
 """
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import Depends, APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from enum import Enum
