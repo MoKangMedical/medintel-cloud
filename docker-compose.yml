@@ -1,0 +1,202 @@
+version: "3.9"
+
+services:
+  # ========== 基础设施 ==========
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: medintel
+      POSTGRES_USER: medintel
+      POSTGRES_PASSWORD: medintel
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # ========== API Gateway ==========
+  gateway:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: uvicorn core.gateway.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - REDIS_URL=redis://redis:6379/0
+      - MIMO_API_KEY=${MIMO_API_KEY:-}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - .:/app
+
+  # ========== 药物发现引擎 ==========
+  medi-pharma:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.drug_discovery.medi_pharma.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - MIMO_API_KEY=${MIMO_API_KEY:-}
+    depends_on:
+      - postgres
+
+  drugmind:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.drug_discovery.drugmind.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - MIMO_API_KEY=${MIMO_API_KEY:-}
+    depends_on:
+      - postgres
+
+  virtual-cell:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.drug_discovery.virtual_cell.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+    depends_on:
+      - postgres
+
+  pharma-sim:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.drug_discovery.pharma_sim.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+
+  # ========== 临床决策引擎 ==========
+  medi-chat-rd:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.clinical.medi_chat_rd.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - MIMO_API_KEY=${MIMO_API_KEY:-}
+    depends_on:
+      - postgres
+
+  med-roundtable:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.clinical.med_roundtable.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - MIMO_API_KEY=${MIMO_API_KEY:-}
+    depends_on:
+      - postgres
+
+  ming-evidence:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.clinical.ming_evidence.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+    depends_on:
+      - postgres
+
+  chroni-care:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.clinical.chroni_care.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - MIMO_API_KEY=${MIMO_API_KEY:-}
+    depends_on:
+      - postgres
+
+  # ========== 认知商业引擎 ==========
+  medi-slim:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.cognitive_commerce.medi_slim.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - MIMO_API_KEY=${MIMO_API_KEY:-}
+    depends_on:
+      - postgres
+
+  tianyan:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.cognitive_commerce.tianyan.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+
+  cloud-memorial:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.cognitive_commerce.cloud_memorial.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+    depends_on:
+      - postgres
+
+  # ========== 知识研究引擎 ==========
+  digital-sage:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.knowledge.digital_sage.service
+    environment:
+      - MIMO_API_KEY=${MIMO_API_KEY:-}
+    depends_on:
+      - redis
+
+  ponder:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.knowledge.ponder.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+    depends_on:
+      - postgres
+
+  heor-modeling:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.knowledge.heor_modeling.service
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://medintel:medintel@postgres:5432/medintel
+    depends_on:
+      - postgres
+
+  biostats:
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile
+    command: python -m services.knowledge.biostats.service
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:

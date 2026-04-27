@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "medintel-cloud"
+version = "1.0.0"
+description = "🏥 MedIntel Cloud — 全栈医疗AI统一平台"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+    "pydantic>=2.10.0",
+    "httpx>=0.28.0",
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.14.0",
+    "redis>=5.0.0",
+    "celery>=5.4.0",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.0",
+    "python-multipart>=0.0.18",
+    "openai>=1.58.0",
+    "biopython>=1.84",
+    "rdkit>=2024.9.0",
+    "pandas>=2.2.0",
+    "numpy>=1.26.0",
+    "scipy>=1.14.0",
+    "scikit-learn>=1.6.0",
+    "matplotlib>=3.10.0",
+    "networkx>=3.4.0",
+    "aiofiles>=24.1.0",
+    "python-dotenv>=1.0.0",
+    "structlog>=24.4.0",
+]
+
+[project.optional-dependencies]
+drug = ["rdkit>=2024.9.0", "biopython>=1.84", "deepchem>=2.8.0"]
+clinical = ["fhir.resources>=7.1.0", "openpyxl>=3.1.0"]
+dev = ["pytest>=8.3.0", "pytest-asyncio>=0.24.0", "pytest-cov>=6.0.0", "ruff>=0.8.0"]
+all = ["medintel-cloud[drug,clinical,dev]"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "services/*/tests"]
+asyncio_mode = "auto"
