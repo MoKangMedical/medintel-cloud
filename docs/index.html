@@ -1,497 +1,96 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedIntel Cloud - MoKangMedical</title>
-    <meta name="description" content="云端医疗智能平台，提供SaaS化的AI医疗解决方案">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #0ea5e9;
-            --accent: #00d4ff;
-            --dark: #0f172a;
-            --darker: #020617;
-            --bg-analytics: #0a0a0f;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --border: #1e293b;
-            --green: #10b981;
-            --purple: #8b5cf6;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--darker);
-            color: var(--light);
-            line-height: 1.6;
-        }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(135deg, var(--darker) 0%, #1e1b4b 50%, var(--darker) 100%);
-        }
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 0%, #0ea5e9 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-        .btn {
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--light);
-            border: 2px solid var(--border);
-        }
-        .features {
-            padding: 100px 0;
-            background: var(--dark);
-        }
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-        }
-        .feature-card {
-            background: var(--darker);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px;
-            transition: all 0.3s ease;
-        }
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-        }
-        .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--primary);
-        }
-        .feature-card p {
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        /* ── Analytics Section ── */
-        .analytics {
-            padding: 100px 0;
-            background: var(--bg-analytics);
-            border-top: 1px solid rgba(0,212,255,0.12);
-            border-bottom: 1px solid rgba(0,212,255,0.12);
-        }
-        .analytics .section-title h2 {
-            background: linear-gradient(135deg, var(--accent), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .analytics .section-title p {
-            color: var(--gray);
-        }
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        @media (max-width: 768px) {
-            .charts-grid { grid-template-columns: 1fr; }
-        }
-        .chart-card {
-            background: rgba(17,24,39,0.8);
-            border: 1px solid rgba(0,212,255,0.12);
-            border-radius: 16px;
-            padding: 24px;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.3s ease;
-        }
-        .chart-card:hover {
-            border-color: rgba(0,212,255,0.35);
-        }
-        .chart-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
-        .chart-card.full-width {
-            grid-column: 1 / -1;
-        }
-        .chart-card h3 {
-            color: var(--light);
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .chart-card h3 .dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-        .dot-cyan { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-        .dot-green { background: var(--green); box-shadow: 0 0 8px var(--green); }
-        .dot-purple { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
-        .chart-wrap { position: relative; }
-        .chart-wrap-280 { height: 280px; }
-        .chart-wrap-300 { height: 300px; }
-
-        .cta {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #0ea5e9 0%, #7c3aed 100%);
-            text-align: center;
-        }
-        .cta h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        footer {
-            padding: 40px 0;
-            background: var(--darker);
-            border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--gray);
-            font-size: 14px;
-        }
-        footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MedIntel Cloud - MoKangMedical</title>
+<meta name="description" content="Cloud-native clinical intelligence platform.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☁️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#22d3ee;--bg:#0a0a0f;--s:#12121a;--t:#e2e8f0;--m:#94a3b8;--b:rgba(255,255,255,.06)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--t);line-height:1.6}
+a{color:var(--p);text-decoration:none}
+.nav{position:fixed;top:0;left:0;right:0;background:rgba(10,10,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--b);z-index:1000;padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.nb{font-size:1.2rem;font-weight:700;color:var(--p)}
+.nl{display:flex;gap:1.5rem;align-items:center}
+.nl a{color:var(--m);font-size:.85rem;transition:color .2s}
+.nl a:hover{color:var(--t)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,#22d3ee15,transparent 70%)}
+.hc{position:relative;max-width:900px}
+.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#fff,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
+.sub{font-size:1.3rem;color:var(--m);margin-bottom:2rem;max-width:700px;margin-left:auto;margin-right:auto}
+.cat{display:inline-block;padding:.4rem 1rem;background:#22d3ee22;border:1px solid #22d3ee44;border-radius:999px;font-size:.8rem;color:var(--p);margin-bottom:2rem}
+.btn{display:inline-block;padding:.8rem 2rem;background:var(--p);color:#fff;border-radius:8px;font-weight:600;transition:all .2s;cursor:pointer;border:none;font-size:1rem}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px #22d3ee40}
+.btns{display:flex;gap:1rem;justify-content:center;margin-top:2rem}
+.btn-o{background:transparent;border:1px solid #22d3ee66;color:var(--p)}
+section{padding:6rem 2rem}
+.section-title{text-align:center;margin-bottom:3rem}
+.section-title h2{font-size:2.5rem;font-weight:700;margin-bottom:.5rem}
+.section-title p{color:var(--m);max-width:600px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;max-width:1200px;margin:0 auto}
+.card{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:2rem;transition:all .3s}
+.card:hover{border-color:#22d3ee44;transform:translateY(-4px)}
+.card h3{font-size:1.2rem;margin-bottom:.5rem}
+.card p{color:var(--m);font-size:.95rem}
+.card-icon{font-size:2rem;margin-bottom:1rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;max-width:1000px;margin:0 auto;text-align:center;padding:4rem 0}
+.stat h3{font-size:2.5rem;font-weight:800;color:var(--p)}
+.stat p{color:var(--m);margin-top:.5rem}
+.pricing{background:var(--s)}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1000px;margin:0 auto}
+.price-card{background:var(--bg);border:1px solid var(--b);border-radius:12px;padding:2.5rem;text-align:center;position:relative}
+.price-card.featured{border-color:#22d3ee;box-shadow:0 0 40px #22d3ee20}
+.price-card.featured::before{content:'POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--p);color:#fff;padding:.2rem 1rem;border-radius:999px;font-size:.7rem;font-weight:700}
+.price-card h3{font-size:1.3rem;margin-bottom:.5rem}
+.price{font-size:2.5rem;font-weight:800;margin:1rem 0}
+.price span{font-size:1rem;font-weight:400;color:var(--m)}
+.price-card ul{list-style:none;text-align:left;margin:1.5rem 0}
+.price-card li{padding:.4rem 0;color:var(--m);font-size:.9rem}
+.price-card li::before{content:'\2713 ';color:var(--p)}
+.cta{text-align:center;padding:6rem 2rem;background:linear-gradient(180deg,var(--bg),var(--s))}
+.cta h2{font-size:2.5rem;font-weight:700;margin-bottom:1rem}
+.cta p{color:var(--m);margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+footer{background:var(--s);border-top:1px solid var(--b);padding:3rem 2rem;text-align:center}
+.footer-links{display:flex;gap:2rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.footer-links a{color:var(--m);font-size:.85rem}
+.footer-brand{color:var(--m);font-size:.85rem}
+@media(max-width:768px){.nav{padding:.8rem 1rem}.nl{display:none}.hero h1{font-size:2rem}.grid{grid-template-columns:1fr}.price-grid{grid-template-columns:1fr}section{padding:3rem 1rem}}
+</style>
 </head>
 <body>
-    <section class="hero">
-        <div class="container">
-            <h1>MedIntel Cloud</h1>
-            <p>云端医疗智能平台，提供SaaS化的AI医疗解决方案</p>
-            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-                <a href="#features" class="btn btn-primary">了解功能</a>
-                <a href="https://github.com/MoKangMedical/medintel-cloud" class="btn btn-secondary">GitHub</a>
-            </div>
-        </div>
-    </section>
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>核心功能</h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card"><h3>云端部署</h3><p>专业的云端部署能力，助力业务增长</p></div>
-                <div class="feature-card"><h3>弹性扩展</h3><p>专业的弹性扩展能力，助力业务增长</p></div>
-                <div class="feature-card"><h3>多租户</h3><p>专业的多租户能力，助力业务增长</p></div>
-                <div class="feature-card"><h3>数据隔离</h3><p>专业的数据隔离能力，助力业务增长</p></div>
-                <div class="feature-card"><h3>API服务</h3><p>专业的API服务能力，助力业务增长</p></div>
-                <div class="feature-card"><h3>计费管理</h3><p>专业的计费管理能力，助力业务增长</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ════════ PLATFORM ANALYTICS ════════ -->
-    <section class="analytics" id="analytics">
-        <div class="container">
-            <div class="section-title">
-                <h2>Platform Analytics</h2>
-                <p>Real-time medical intelligence metrics &amp; cloud platform performance</p>
-            </div>
-            <div class="charts-grid">
-                <!-- Chart 1: AI Diagnostic Accuracy Trend -->
-                <div class="chart-card">
-                    <h3><span class="dot dot-cyan"></span>AI Diagnostic Accuracy Trend</h3>
-                    <div class="chart-wrap chart-wrap-280"><canvas id="chartAccuracy"></canvas></div>
-                </div>
-                <!-- Chart 2: Clinical Module Usage Distribution -->
-                <div class="chart-card">
-                    <h3><span class="dot dot-green"></span>Clinical Module Usage Distribution</h3>
-                    <div class="chart-wrap chart-wrap-280"><canvas id="chartModules"></canvas></div>
-                </div>
-                <!-- Chart 3: Cloud Platform Performance (full width) -->
-                <div class="chart-card full-width">
-                    <h3><span class="dot dot-purple"></span>Cloud Platform Performance — Monthly API Calls &amp; Response Time</h3>
-                    <div class="chart-wrap chart-wrap-300"><canvas id="chartPerformance"></canvas></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta">
-        <div class="container">
-            <h2>开始使用 MedIntel Cloud</h2>
-            <p>加入MoKangMedical生态，探索AI医疗的无限可能</p>
-            <a href="https://github.com/MoKangMedical/medintel-cloud" class="btn" style="background:white;color:var(--primary)">立即开始</a>
-        </div>
-    </section>
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 MoKangMedical. All rights reserved. | <a href="https://mokangmedical.github.io/opc-homepage/">生态首页</a></p>
-        </div>
-    </footer>
-
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-    <script>
-    (function(){
-        /* ── Dark theme defaults ── */
-        Chart.defaults.color = '#94a3b8';
-        Chart.defaults.borderColor = 'rgba(30,41,59,0.8)';
-        Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
-        Chart.defaults.plugins.legend.labels.usePointStyle = true;
-        Chart.defaults.plugins.legend.labels.padding = 16;
-
-        var accent  = '#00d4ff';
-        var primary = '#0ea5e9';
-        var green   = '#10b981';
-        var purple  = '#8b5cf6';
-        var gridCol = 'rgba(30,41,59,0.6)';
-
-        var tooltipCfg = {
-            backgroundColor: 'rgba(10,10,15,0.95)',
-            borderColor: 'rgba(0,212,255,0.3)',
-            borderWidth: 1,
-            titleColor: '#f1f5f9',
-            bodyColor: '#94a3b8',
-            padding: 12,
-            cornerRadius: 8
-        };
-
-        /* ── Chart 1: AI Diagnostic Accuracy Trend (multi-line) ── */
-        var ctxAcc  = document.getElementById('chartAccuracy').getContext('2d');
-        var gradAcc = ctxAcc.createLinearGradient(0, 0, 0, 280);
-        gradAcc.addColorStop(0, 'rgba(0,212,255,0.25)');
-        gradAcc.addColorStop(1, 'rgba(0,212,255,0)');
-
-        new Chart(ctxAcc, {
-            type: 'line',
-            data: {
-                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                datasets: [
-                    {
-                        label: 'Imaging AI',
-                        data: [89.2, 90.1, 90.8, 91.3, 91.9, 92.5, 93.0, 93.4, 93.8, 94.2, 94.6, 95.1],
-                        borderColor: accent,
-                        backgroundColor: gradAcc,
-                        borderWidth: 2.5,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 3,
-                        pointHoverRadius: 7,
-                        pointBackgroundColor: accent,
-                        pointBorderColor: '#0a0a0f',
-                        pointBorderWidth: 2,
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: accent,
-                        pointHoverBorderWidth: 3
-                    },
-                    {
-                        label: 'Lab Analysis',
-                        data: [85.5, 86.2, 87.0, 87.5, 88.1, 88.8, 89.3, 89.7, 90.2, 90.6, 91.0, 91.5],
-                        borderColor: purple,
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        borderDash: [6, 3],
-                        tension: 0.4,
-                        pointRadius: 3,
-                        pointHoverRadius: 6,
-                        pointBackgroundColor: purple,
-                        pointBorderColor: '#0a0a0f',
-                        pointBorderWidth: 2
-                    },
-                    {
-                        label: 'Clinical Decision',
-                        data: [92.0, 92.3, 92.8, 93.1, 93.5, 93.8, 94.0, 94.3, 94.5, 94.8, 95.0, 95.3],
-                        borderColor: green,
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        pointRadius: 3,
-                        pointHoverRadius: 6,
-                        pointBackgroundColor: green,
-                        pointBorderColor: '#0a0a0f',
-                        pointBorderWidth: 2
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: { mode: 'index', intersect: false },
-                plugins: {
-                    legend: { position: 'top', align: 'end' },
-                    tooltip: Object.assign({}, tooltipCfg, {
-                        callbacks: { label: function(ctx){ return ctx.dataset.label + ': ' + ctx.parsed.y + '%'; } }
-                    })
-                },
-                scales: {
-                    x: { grid: { color: gridCol }, ticks: { maxRotation: 0 } },
-                    y: { min: 82, max: 100, grid: { color: gridCol }, ticks: { callback: function(v){ return v + '%'; } } }
-                },
-                animation: { duration: 1200, easing: 'easeOutQuart' }
-            }
-        });
-
-        /* ── Chart 2: Clinical Module Usage Distribution (doughnut) ── */
-        new Chart(document.getElementById('chartModules'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Imaging AI','Pharma Services','EHR System','Health Analytics','Clinical Decision','Patient Portal','Alert System','HIS Integration'],
-                datasets: [{
-                    data: [24, 18, 16, 14, 12, 8, 5, 3],
-                    backgroundColor: ['#00d4ff','#0ea5e9','#8b5cf6','#10b981','#f59e0b','#ef4444','#ec4899','#6366f1'],
-                    borderColor: '#111827',
-                    borderWidth: 3,
-                    hoverBorderColor: '#00d4ff',
-                    hoverBorderWidth: 2,
-                    hoverOffset: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '58%',
-                plugins: {
-                    legend: { position: 'right', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
-                    tooltip: Object.assign({}, tooltipCfg, {
-                        callbacks: { label: function(ctx){ return ' ' + ctx.label + ': ' + ctx.parsed + '% of queries'; } }
-                    })
-                },
-                animation: { animateRotate: true, animateScale: true, duration: 1400, easing: 'easeOutQuart' }
-            }
-        });
-
-        /* ── Chart 3: Cloud Platform Performance (mixed bar + line, dual axis) ── */
-        var ctxPerf = document.getElementById('chartPerformance').getContext('2d');
-        var gradApi = ctxPerf.createLinearGradient(0, 0, 0, 300);
-        gradApi.addColorStop(0, 'rgba(0,212,255,0.2)');
-        gradApi.addColorStop(1, 'rgba(0,212,255,0)');
-
-        new Chart(ctxPerf, {
-            type: 'bar',
-            data: {
-                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                datasets: [
-                    {
-                        label: 'API Calls (M)',
-                        type: 'bar',
-                        data: [1.2, 1.5, 1.8, 2.1, 2.4, 2.9, 3.3, 3.8, 4.2, 4.7, 5.1, 5.6],
-                        backgroundColor: 'rgba(0,212,255,0.35)',
-                        hoverBackgroundColor: 'rgba(0,212,255,0.6)',
-                        borderColor: accent,
-                        borderWidth: 1,
-                        borderRadius: 6,
-                        yAxisID: 'y'
-                    },
-                    {
-                        label: 'Avg Response Time (ms)',
-                        type: 'line',
-                        data: [145, 138, 132, 128, 122, 118, 115, 112, 108, 105, 102, 98],
-                        borderColor: purple,
-                        backgroundColor: 'transparent',
-                        borderWidth: 2.5,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointHoverRadius: 7,
-                        pointBackgroundColor: purple,
-                        pointBorderColor: '#0a0a0f',
-                        pointBorderWidth: 2,
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: purple,
-                        pointHoverBorderWidth: 3,
-                        yAxisID: 'y1'
-                    },
-                    {
-                        label: 'Uptime %',
-                        type: 'line',
-                        data: [99.85, 99.88, 99.91, 99.90, 99.93, 99.95, 99.92, 99.96, 99.94, 99.97, 99.95, 99.98],
-                        borderColor: green,
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        borderDash: [8, 4],
-                        tension: 0.4,
-                        pointRadius: 3,
-                        pointHoverRadius: 6,
-                        pointBackgroundColor: green,
-                        pointBorderColor: '#0a0a0f',
-                        pointBorderWidth: 2,
-                        yAxisID: 'y2'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: { mode: 'index', intersect: false },
-                plugins: {
-                    legend: { position: 'top', align: 'end' },
-                    tooltip: tooltipCfg
-                },
-                scales: {
-                    x: { grid: { color: gridCol }, ticks: { maxRotation: 0 } },
-                    y:  { position: 'left',  title: { display: true, text: 'API Calls (Millions)', color: accent, font: { size: 11 } }, grid: { color: gridCol }, ticks: { callback: function(v){ return v + 'M'; } } },
-                    y1: { position: 'right', title: { display: true, text: 'Response Time (ms)', color: purple, font: { size: 11 } }, grid: { drawOnChartArea: false }, ticks: { callback: function(v){ return v + 'ms'; } } },
-                    y2: { display: false, min: 99.7, max: 100.1 }
-                },
-                animation: { duration: 1200, easing: 'easeOutQuart' }
-            }
-        });
-    })();
-    </script>
-
-<!-- OPC Eco Nav -->
-<div style="position:fixed;bottom:20px;right:20px;z-index:99;background:rgba(17,24,39,.95);backdrop-filter:blur(10px);border:1px solid #1e293b;border-radius:12px;padding:12px;box-shadow:0 10px 40px rgba(0,0,0,.4);max-width:200px">
-<div style="font-size:.7rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.05rem;padding:4px 8px;border-bottom:1px solid #1e293b;margin-bottom:6px">OPC Ecosystem</div>
-<a href="https://mokangmedical.github.io/opc-homepage/" style="display:block;padding:3px 8px;color:#94a3b8;font-size:.78rem;text-decoration:none;border-radius:4px;transition:all .2s">🏠 OPC Home</a>
-<a href="https://mokangmedical.github.io/DrugMind/" style="display:block;padding:3px 8px;color:#94a3b8;font-size:.78rem;text-decoration:none;border-radius:4px;transition:all .2s">💊 DrugMind</a>
-<a href="https://mokangmedical.github.io/PharmaSim/" style="display:block;padding:3px 8px;color:#94a3b8;font-size:.78rem;text-decoration:none;border-radius:4px;transition:all .2s">🧪 PharmaSim</a>
-<a href="https://mokangmedical.github.io/medichat-rd/" style="display:block;padding:3px 8px;color:#94a3b8;font-size:.78rem;text-decoration:none;border-radius:4px;transition:all .2s">🏥 MediChat-RD</a>
-<a href="https://mokangmedical.github.io/tianyan/" style="display:block;padding:3px 8px;color:#94a3b8;font-size:.78rem;text-decoration:none;border-radius:4px;transition:all .2s">👁️ Tianyan</a>
+<nav class="nav">
+<a href="/" class="nb">☁️ MedIntel Cloud</a>
+<div class="nl">
+<a href="#features">Features</a><a href="#pricing">Pricing</a>
+<a href="https://github.com/MoKangMedical/medintel-cloud" target="_blank">GitHub</a>
+<a href="https://mokangmedical.github.io/opc-homepage/">OPC Ecosystem</a>
 </div>
-
-</body>
-</html>
+</nav>
+<section class="hero"><div class="hc">
+<div class="cat">Clinical Intelligence</div>
+<h1>MedIntel Cloud</h1>
+<p class="sub">Cloud-native clinical intelligence platform for healthcare analytics, population health management, and operational optimization.</p>
+<div class="btns"><a href="#pricing" class="btn">Get Started</a><a href="#features" class="btn btn-o">Learn More</a></div>
+</div></section>
+<section id="features"><div class="section-title"><h2>Core Capabilities</h2><p>Enterprise-grade features for healthcare professionals</p></div>
+<div class="grid"><div class="card"><div class="card-icon">📊</div><h3>Population Health</h3><p>Aggregate analytics across patient populations.</p></div><div class="card"><div class="card-icon">🔮</div><h3>Predictive Models</h3><p>ML-powered outcome prediction and risk stratification.</p></div><div class="card"><div class="card-icon">🏥</div><h3>Operational Analytics</h3><p>Hospital operations optimization and resource planning.</p></div><div class="card"><div class="card-icon">📈</div><h3>Real-time Dashboards</h3><p>Customizable dashboards with drill-down capabilities.</p></div><div class="card"><div class="card-icon">🔗</div><h3>Data Integration</h3><p>Connect EHR, claims, and social determinants data.</p></div><div class="card"><div class="card-icon">🔒</div><h3>HIPAA Compliant</h3><p>Enterprise security with SOC2 and HITRUST certification.</p></div></div></section>
+<section><div class="stats">
+<div class="stat"><h3>99.5%</h3><p>Uptime SLA</p></div>
+<div class="stat"><h3>50ms</h3><p>Response Time</p></div>
+<div class="stat"><h3>HIPAA</h3><p>Compliant</p></div>
+<div class="stat"><h3>24/7</h3><p>Support</p></div>
+</div></section>
+<section id="pricing" class="pricing"><div class="section-title"><h2>Pricing Plans</h2><p>Flexible plans for teams of all sizes</p></div>
+<div class="price-grid"><div class="price-card"><h3>Standard</h3><div class="price">$499<span>/month</span></div><ul><li>100K patients</li><li>Basic analytics</li><li>Email support</li></ul><a href="mailto:contact@mokangmedical.com?subject=MedIntel Cloud - Standard" class="btn" style="width:100%">Get Started</a></div><div class="price-card featured"><h3>Advanced</h3><div class="price">$1,499<span>/month</span></div><ul><li>1M patients</li><li>Advanced ML</li><li>Priority support</li><li>API</li></ul><a href="mailto:contact@mokangmedical.com?subject=MedIntel Cloud - Advanced" class="btn" style="width:100%">Get Started</a></div><div class="price-card"><h3>Enterprise</h3><div class="price">Custom<span>/month</span></div><ul><li>Unlimited</li><li>Custom models</li><li>24/7 support</li></ul><a href="mailto:contact@mokangmedical.com?subject=MedIntel Cloud - Enterprise" class="btn" style="width:100%">Get Started</a></div></div></section>
+<section class="cta"><h2>Ready to Transform Your Workflow?</h2>
+<p>Join leading healthcare institutions using MedIntel Cloud to improve patient outcomes.</p>
+<a href="mailto:contact@mokangmedical.com?subject=MedIntel Cloud Inquiry" class="btn">Contact Sales</a></section>
+<footer><div class="footer-links">
+<a href="https://mokangmedical.github.io/opc-homepage/">OPC Ecosystem</a>
+<a href="https://github.com/MoKangMedical/medintel-cloud">GitHub</a>
+<a href="mailto:contact@mokangmedical.com">Contact</a>
+</div><div class="footer-brand">&copy; 2026 MoKangMedical. All rights reserved.</div></footer>
+</body></html>
