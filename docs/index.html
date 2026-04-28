@@ -205,7 +205,19 @@
             color: var(--primary);
             text-decoration: none;
         }
-    </style>
+    
+/* MoKangMedical Cross-Project Navigation */
+.mk-nav{position:fixed;bottom:24px;right:24px;z-index:9999}
+.mk-nav-toggle{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#06b6d4);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(59,130,246,.3);transition:.3s}
+.mk-nav-toggle:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(59,130,246,.4)}
+.mk-nav-toggle svg{width:24px;height:24px;fill:#fff}
+.mk-nav-panel{position:absolute;bottom:60px;right:0;width:280px;background:#12121a;border:1px solid #1e1e2e;border-radius:12px;padding:16px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.mk-nav-panel.show{display:block}
+.mk-nav-panel h4{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-bottom:8px;margin-top:12px}
+.mk-nav-panel h4:first-child{margin-top:0}
+.mk-nav-panel a{display:block;padding:8px 12px;color:#e0e0e0;font-size:13px;border-radius:6px;text-decoration:none;transition:.2s}
+.mk-nav-panel a:hover{background:#1e1e2e;color:#fff}
+</style>
 </head>
 <body>
     <section class="hero">
@@ -482,5 +494,54 @@
         });
     })();
     </script>
-</body>
+<script>
+(function(){
+  var p=[
+    {n:'OPC Homepage',u:'https://mokangmedical.github.io/opc-homepage/',g:'Core'},
+    {n:'Tianyan',u:'https://mokangmedical.github.io/tianyan/',g:'AI'},
+    {n:'DrugMind',u:'https://mokangmedical.github.io/drugmind/',g:'AI'},
+    {n:'PharmaSim',u:'https://mokangmedical.github.io/PharmaSim/',g:'AI'},
+    {n:'MediChat-RD',u:'https://mokangmedical.github.io/medichat-rd/',g:'AI'},
+    {n:'ChroniCare OS',u:'https://mokangmedical.github.io/chronicdiseasemanagement/',g:'Health'},
+    {n:'VoiceHealth',u:'https://mokangmedical.github.io/ai-health-platform/',g:'Health'},
+    {n:'Digital Sage',u:'https://mokangmedical.github.io/digital-sage/',g:'Edu'},
+    {n:'Kondratiev Wave',u:'https://mokangmedical.github.io/kondratiev-wave/',g:'Edu'},
+    {n:'Cloud Memorial',u:'https://mokangmedical.github.io/cloud-memorial/',g:'Life'},
+    {n:'NarrowGate',u:'https://mokangmedical.github.io/narrowgate/',g:'Life'},
+    {n:'Virtual Cell',u:'https://mokangmedical.github.io/virtual-cell/',g:'Research'},
+    {n:'MetaForge',u:'https://mokangmedical.github.io/metaforge/',g:'Research'},
+    {n:'Biostats',u:'https://mokangmedical.github.io/biostats-/',g:'Research'},
+    {n:'NHANES-to-Lancet',u:'https://mokangmedical.github.io/nhanes-to-lancet/',g:'Research'},
+    {n:'Clinical Trials',u:'https://mokangmedical.github.io/global-clinical-trials-insight-and-commentary-platform-overview/',g:'Research'},
+    {n:'HEOR Platform',u:'https://mokangmedical.github.io/heor-modeling-platform/',g:'Research'},
+    {n:'Oncology Research',u:'https://mokangmedical.github.io/oncology-global-data-to-lancet/',g:'Research'},
+    {n:'SEER Analysis',u:'https://mokangmedical.github.io/seer-data-to-top-oncology-journal/',g:'Research'},
+    {n:'DrugCLIP',u:'https://mokangmedical.github.io/drugclip-benchmark/',g:'Research'},
+    {n:'Pilot Stone',u:'https://mokangmedical.github.io/pilot-stone-prediction/',g:'Research'},
+    {n:'PharmaSpark',u:'https://mokangmedical.github.io/pharmaspark/',g:'Tools'},
+    {n:'OPC Platform',u:'https://mokangmedical.github.io/opc-platform/',g:'Core'},
+    {n:'OPC Marketplace',u:'https://mokangmedical.github.io/opc-marketplace/',g:'Core'},
+    {n:'OPC Alliance',u:'https://mokangmedical.github.io/opc-alliance/',g:'Core'}
+  ];
+  var groups={};
+  p.forEach(function(i){if(!groups[i.g])groups[i.g]=[];groups[i.g].push(i);});
+  var d=document.createElement('div');
+  d.className='mk-nav';
+  var html='<button class="mk-nav-toggle" onclick="this.nextElementSibling.classList.toggle('+"'show'"+')"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></button>';
+  html+='<div class="mk-nav-panel">';
+  for(var g in groups){
+    html+='<h4>'+g+'</h4>';
+    groups[g].forEach(function(i){html+='<a href="'+i.u+'" target="_blank">'+i.n+'</a>';});
+  }
+  html+='</div>';
+  d.innerHTML=html;
+  document.body.appendChild(d);
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.mk-nav')){
+      var panel=d.querySelector('.mk-nav-panel');
+      if(panel)panel.classList.remove('show');
+    }
+  });
+})();
+</script></body>
 </html>
