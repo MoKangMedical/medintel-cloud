@@ -9,11 +9,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #0ea5e9;
+            --accent: #00d4ff;
             --dark: #0f172a;
             --darker: #020617;
+            --bg-analytics: #0a0a0f;
             --light: #f8fafc;
             --gray: #64748b;
             --border: #1e293b;
+            --green: #10b981;
+            --purple: #8b5cf6;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -107,6 +111,78 @@
             color: var(--gray);
             font-size: 14px;
         }
+
+        /* ── Analytics Section ── */
+        .analytics {
+            padding: 100px 0;
+            background: var(--bg-analytics);
+            border-top: 1px solid rgba(0,212,255,0.12);
+            border-bottom: 1px solid rgba(0,212,255,0.12);
+        }
+        .analytics .section-title h2 {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .analytics .section-title p {
+            color: var(--gray);
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .charts-grid { grid-template-columns: 1fr; }
+        }
+        .chart-card {
+            background: rgba(17,24,39,0.8);
+            border: 1px solid rgba(0,212,255,0.12);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+        .chart-card:hover {
+            border-color: rgba(0,212,255,0.35);
+        }
+        .chart-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+        }
+        .chart-card h3 {
+            color: var(--light);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .chart-card h3 .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .dot-cyan { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        .dot-green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+        .dot-purple { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
+        .chart-wrap { position: relative; }
+        .chart-wrap-280 { height: 280px; }
+        .chart-wrap-300 { height: 300px; }
+
         .cta {
             padding: 100px 0;
             background: linear-gradient(135deg, #0ea5e9 0%, #7c3aed 100%);
@@ -131,17 +207,7 @@
         }
     </style>
 </head>
-<body style="padding-top:56px!important"><nav id="opc-nav" style="position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(10,10,30,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,0.2);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-  <a href="https://mokangmedical.github.io/opc-homepage/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:700;font-size:15px">
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="url(#ng1)" stroke-width="2.5"/><path d="M10 16h12M16 10v12" stroke="url(#ng1)" stroke-width="2.5" stroke-linecap="round"/><defs><linearGradient id="ng1" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#818cf8"/><stop offset="1" stop-color="#c084fc"/></linearGradient></defs></svg>
-    <span style="background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent">MoKangMedical</span>
-  </a>
-  <div style="display:flex;gap:6px;align-items:center">
-    <a href="https://mokangmedical.github.io/opc-homepage/" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:8px">生态首页</a>
-    <a href="https://github.com/MoKangMedical" target="_blank" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:8px">GitHub</a>
-    <a href="https://mokangmedical.github.io/opc-alliance/" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:6px 16px;border-radius:8px;font-weight:600;font-size:13px;text-decoration:none">OPC Hub</a>
-  </div>
-</nav>
+<body>
     <section class="hero">
         <div class="container">
             <h1>MedIntel Cloud</h1>
@@ -158,10 +224,43 @@
                 <h2>核心功能</h2>
             </div>
             <div class="features-grid">
-                <div class="feature-card"><h3>云端部署</h3><p>专业的云端部署能力，助力业务增长</p></div><div class="feature-card"><h3>弹性扩展</h3><p>专业的弹性扩展能力，助力业务增长</p></div><div class="feature-card"><h3>多租户</h3><p>专业的多租户能力，助力业务增长</p></div><div class="feature-card"><h3>数据隔离</h3><p>专业的数据隔离能力，助力业务增长</p></div><div class="feature-card"><h3>API服务</h3><p>专业的API服务能力，助力业务增长</p></div><div class="feature-card"><h3>计费管理</h3><p>专业的计费管理能力，助力业务增长</p></div>
+                <div class="feature-card"><h3>云端部署</h3><p>专业的云端部署能力，助力业务增长</p></div>
+                <div class="feature-card"><h3>弹性扩展</h3><p>专业的弹性扩展能力，助力业务增长</p></div>
+                <div class="feature-card"><h3>多租户</h3><p>专业的多租户能力，助力业务增长</p></div>
+                <div class="feature-card"><h3>数据隔离</h3><p>专业的数据隔离能力，助力业务增长</p></div>
+                <div class="feature-card"><h3>API服务</h3><p>专业的API服务能力，助力业务增长</p></div>
+                <div class="feature-card"><h3>计费管理</h3><p>专业的计费管理能力，助力业务增长</p></div>
             </div>
         </div>
     </section>
+
+    <!-- ════════ PLATFORM ANALYTICS ════════ -->
+    <section class="analytics" id="analytics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Platform Analytics</h2>
+                <p>Real-time medical intelligence metrics &amp; cloud platform performance</p>
+            </div>
+            <div class="charts-grid">
+                <!-- Chart 1: AI Diagnostic Accuracy Trend -->
+                <div class="chart-card">
+                    <h3><span class="dot dot-cyan"></span>AI Diagnostic Accuracy Trend</h3>
+                    <div class="chart-wrap chart-wrap-280"><canvas id="chartAccuracy"></canvas></div>
+                </div>
+                <!-- Chart 2: Clinical Module Usage Distribution -->
+                <div class="chart-card">
+                    <h3><span class="dot dot-green"></span>Clinical Module Usage Distribution</h3>
+                    <div class="chart-wrap chart-wrap-280"><canvas id="chartModules"></canvas></div>
+                </div>
+                <!-- Chart 3: Cloud Platform Performance (full width) -->
+                <div class="chart-card full-width">
+                    <h3><span class="dot dot-purple"></span>Cloud Platform Performance — Monthly API Calls &amp; Response Time</h3>
+                    <div class="chart-wrap chart-wrap-300"><canvas id="chartPerformance"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="cta">
         <div class="container">
             <h2>开始使用 MedIntel Cloud</h2>
@@ -174,5 +273,214 @@
             <p>&copy; 2026 MoKangMedical. All rights reserved. | <a href="https://mokangmedical.github.io/opc-homepage/">生态首页</a></p>
         </div>
     </footer>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script>
+    (function(){
+        /* ── Dark theme defaults ── */
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = 'rgba(30,41,59,0.8)';
+        Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
+        Chart.defaults.plugins.legend.labels.usePointStyle = true;
+        Chart.defaults.plugins.legend.labels.padding = 16;
+
+        var accent  = '#00d4ff';
+        var primary = '#0ea5e9';
+        var green   = '#10b981';
+        var purple  = '#8b5cf6';
+        var gridCol = 'rgba(30,41,59,0.6)';
+
+        var tooltipCfg = {
+            backgroundColor: 'rgba(10,10,15,0.95)',
+            borderColor: 'rgba(0,212,255,0.3)',
+            borderWidth: 1,
+            titleColor: '#f1f5f9',
+            bodyColor: '#94a3b8',
+            padding: 12,
+            cornerRadius: 8
+        };
+
+        /* ── Chart 1: AI Diagnostic Accuracy Trend (multi-line) ── */
+        var ctxAcc  = document.getElementById('chartAccuracy').getContext('2d');
+        var gradAcc = ctxAcc.createLinearGradient(0, 0, 0, 280);
+        gradAcc.addColorStop(0, 'rgba(0,212,255,0.25)');
+        gradAcc.addColorStop(1, 'rgba(0,212,255,0)');
+
+        new Chart(ctxAcc, {
+            type: 'line',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [
+                    {
+                        label: 'Imaging AI',
+                        data: [89.2, 90.1, 90.8, 91.3, 91.9, 92.5, 93.0, 93.4, 93.8, 94.2, 94.6, 95.1],
+                        borderColor: accent,
+                        backgroundColor: gradAcc,
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 7,
+                        pointBackgroundColor: accent,
+                        pointBorderColor: '#0a0a0f',
+                        pointBorderWidth: 2,
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: accent,
+                        pointHoverBorderWidth: 3
+                    },
+                    {
+                        label: 'Lab Analysis',
+                        data: [85.5, 86.2, 87.0, 87.5, 88.1, 88.8, 89.3, 89.7, 90.2, 90.6, 91.0, 91.5],
+                        borderColor: purple,
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        borderDash: [6, 3],
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: purple,
+                        pointBorderColor: '#0a0a0f',
+                        pointBorderWidth: 2
+                    },
+                    {
+                        label: 'Clinical Decision',
+                        data: [92.0, 92.3, 92.8, 93.1, 93.5, 93.8, 94.0, 94.3, 94.5, 94.8, 95.0, 95.3],
+                        borderColor: green,
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: green,
+                        pointBorderColor: '#0a0a0f',
+                        pointBorderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { position: 'top', align: 'end' },
+                    tooltip: Object.assign({}, tooltipCfg, {
+                        callbacks: { label: function(ctx){ return ctx.dataset.label + ': ' + ctx.parsed.y + '%'; } }
+                    })
+                },
+                scales: {
+                    x: { grid: { color: gridCol }, ticks: { maxRotation: 0 } },
+                    y: { min: 82, max: 100, grid: { color: gridCol }, ticks: { callback: function(v){ return v + '%'; } } }
+                },
+                animation: { duration: 1200, easing: 'easeOutQuart' }
+            }
+        });
+
+        /* ── Chart 2: Clinical Module Usage Distribution (doughnut) ── */
+        new Chart(document.getElementById('chartModules'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Imaging AI','Pharma Services','EHR System','Health Analytics','Clinical Decision','Patient Portal','Alert System','HIS Integration'],
+                datasets: [{
+                    data: [24, 18, 16, 14, 12, 8, 5, 3],
+                    backgroundColor: ['#00d4ff','#0ea5e9','#8b5cf6','#10b981','#f59e0b','#ef4444','#ec4899','#6366f1'],
+                    borderColor: '#111827',
+                    borderWidth: 3,
+                    hoverBorderColor: '#00d4ff',
+                    hoverBorderWidth: 2,
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '58%',
+                plugins: {
+                    legend: { position: 'right', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
+                    tooltip: Object.assign({}, tooltipCfg, {
+                        callbacks: { label: function(ctx){ return ' ' + ctx.label + ': ' + ctx.parsed + '% of queries'; } }
+                    })
+                },
+                animation: { animateRotate: true, animateScale: true, duration: 1400, easing: 'easeOutQuart' }
+            }
+        });
+
+        /* ── Chart 3: Cloud Platform Performance (mixed bar + line, dual axis) ── */
+        var ctxPerf = document.getElementById('chartPerformance').getContext('2d');
+        var gradApi = ctxPerf.createLinearGradient(0, 0, 0, 300);
+        gradApi.addColorStop(0, 'rgba(0,212,255,0.2)');
+        gradApi.addColorStop(1, 'rgba(0,212,255,0)');
+
+        new Chart(ctxPerf, {
+            type: 'bar',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [
+                    {
+                        label: 'API Calls (M)',
+                        type: 'bar',
+                        data: [1.2, 1.5, 1.8, 2.1, 2.4, 2.9, 3.3, 3.8, 4.2, 4.7, 5.1, 5.6],
+                        backgroundColor: 'rgba(0,212,255,0.35)',
+                        hoverBackgroundColor: 'rgba(0,212,255,0.6)',
+                        borderColor: accent,
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Avg Response Time (ms)',
+                        type: 'line',
+                        data: [145, 138, 132, 128, 122, 118, 115, 112, 108, 105, 102, 98],
+                        borderColor: purple,
+                        backgroundColor: 'transparent',
+                        borderWidth: 2.5,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointHoverRadius: 7,
+                        pointBackgroundColor: purple,
+                        pointBorderColor: '#0a0a0f',
+                        pointBorderWidth: 2,
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: purple,
+                        pointHoverBorderWidth: 3,
+                        yAxisID: 'y1'
+                    },
+                    {
+                        label: 'Uptime %',
+                        type: 'line',
+                        data: [99.85, 99.88, 99.91, 99.90, 99.93, 99.95, 99.92, 99.96, 99.94, 99.97, 99.95, 99.98],
+                        borderColor: green,
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        borderDash: [8, 4],
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: green,
+                        pointBorderColor: '#0a0a0f',
+                        pointBorderWidth: 2,
+                        yAxisID: 'y2'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { position: 'top', align: 'end' },
+                    tooltip: tooltipCfg
+                },
+                scales: {
+                    x: { grid: { color: gridCol }, ticks: { maxRotation: 0 } },
+                    y:  { position: 'left',  title: { display: true, text: 'API Calls (Millions)', color: accent, font: { size: 11 } }, grid: { color: gridCol }, ticks: { callback: function(v){ return v + 'M'; } } },
+                    y1: { position: 'right', title: { display: true, text: 'Response Time (ms)', color: purple, font: { size: 11 } }, grid: { drawOnChartArea: false }, ticks: { callback: function(v){ return v + 'ms'; } } },
+                    y2: { display: false, min: 99.7, max: 100.1 }
+                },
+                animation: { duration: 1200, easing: 'easeOutQuart' }
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
